@@ -57,4 +57,48 @@ class Lotto_db:
             prev_drwno_list = drwno_list
             
         print(f"same_no_info : {same_no_info}")
+        
+        
+    def check_continuity_no(self):
+        print("한 게임에 연속된 번호가 몇게가 나올 수 있는지 계산합니다.")
+        
+        # 한게임에 연속된 숫자가 몇세트가 나올수 있는지 체크
+        result_set = {}
+        for row, value in tqdm.tqdm(self.df_database.iterrows(), total = self.df_database.shape[0]):
+            drwno_list = [value["drwtNo1"], value["drwtNo2"], value["drwtNo3"], value["drwtNo4"], value["drwtNo5"], value["drwtNo6"]]
+            
+            list_index = 1
+            continuity_set = []
+            count = 1
+            while list_index < len(drwno_list):
+                if drwno_list[list_index] == drwno_list[list_index-1] + 1:
+                    count += 1
+                else:
+                    continuity_set.append(count)
+                    count = 1
+                    
+                list_index += 1
+            
+            continuity_set.append(count)
+            continuity_set.sort()
+            
+            continuity_set = tuple(continuity_set)
+            
+            if result_set.get(continuity_set) == None:
+                result_set[continuity_set] = 1
+            else:
+                result_set[continuity_set] += 1
+            
+                
+            
+            # same_no_count = 0
+            # for item in drwno_list:
+            #     if item in prev_drwno_list:
+            #         same_no_count += 1
+            # same_no_info["same_no_count"][same_no_count] += 1
+
+            # prev_drwno_list = drwno_list
+            
+        print(f"result_set : {result_set}")
+            
             
