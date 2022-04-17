@@ -1,12 +1,6 @@
-import requests
-import pandas
-import tqdm
-import os
 import lotto_module
-import datetime
-import math
-
 
 lotto_db = lotto_module.Lotto_db()
-lotto_db.cal_same_number_percentage()
+lotto_db.analysis_same_no()
+lotto_db.analysis_straight_no()
 
